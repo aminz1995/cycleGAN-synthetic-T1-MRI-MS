@@ -35,27 +35,27 @@ data/
 
 
 ## 🚀 Training
-
+```
 python GAN_training.py
-
+```
 ## 🧪 Evaluation
-
+```
 python GAN_test.py
-
+```
 ## 📊 Evaluation Metrics
-
+```
 SSIM (Structural Similarity Index)
 PSNR (Peak Signal-to-Noise Ratio)
-
+```
 ## 📚 Citation
-
+```
 @article{---2025,
   title={Cycle-GAN generated synthetic T1 MRI from Flair in multiple sclerosis: A Quantitative Evaluation},
   author={Author names},
   journal={Journal Name},
   year={2025}
 }
-
+```
 ## 📧 Contact
 
 Questions? Reach out at aminz1995@gmail.com
