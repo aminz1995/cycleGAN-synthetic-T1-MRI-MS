@@ -23,7 +23,7 @@ pip install -r requirements.txt
 ```
 
 ## 📂 Dataset Structure
-
+```
 data/
 ├── train/
 │   ├── flair/        # FLAIR images (Domain A)
@@ -31,6 +31,7 @@ data/
 ├── test/
 │   ├── flair/
 │   └── t1/
+```
 
 
 ## 🚀 Training
