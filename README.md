@@ -32,25 +32,19 @@ data/
 │   ├── flair/
 │   └── t1/
 
-Images can be in .nii, .nii.gz, or .png formats.
-Preprocessing scripts available in data/.
-
 
 ## 🚀 Training
 
-python src/train.py --config configs/cyclegan_config.yaml
+python src/train.py
 
 ## 🧪 Evaluation
 
-python src/test.py --weights path/to/model.pth --data path/to/testset
-
+python src/test.py
 
 ## 📊 Evaluation Metrics
 
-    SSIM (Structural Similarity Index)
-
-    PSNR (Peak Signal-to-Noise Ratio)
-
+SSIM (Structural Similarity Index)
+PSNR (Peak Signal-to-Noise Ratio)
 
 ## 📚 Citation
 
@@ -65,7 +59,3 @@ python src/test.py --weights path/to/model.pth --data path/to/testset
 
 Questions? Reach out at aminz1995@gmail.com
 
-
----
-
-Let me know if you want this saved as a downloadable `README.md` file!
