@@ -36,11 +36,11 @@ data/
 
 ## 🚀 Training
 
-python src/train.py
+python GAN_training.py
 
 ## 🧪 Evaluation
 
-python src/test.py
+python GAN_test.py
 
 ## 📊 Evaluation Metrics
 
@@ -49,7 +49,7 @@ PSNR (Peak Signal-to-Noise Ratio)
 
 ## 📚 Citation
 
-@article{yourcitation2025,
+@article{---2025,
   title={Cycle-GAN generated synthetic T1 MRI from Flair in multiple sclerosis: A Quantitative Evaluation},
   author={Author names},
   journal={Journal Name},
