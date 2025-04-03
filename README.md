@@ -17,7 +17,7 @@ Evaluation includes image similarity metrics.
 ## ⚙️ Installation
 
 ```bash
-git clone https://github.com/yourusername/cycleGAN-synthetic-T1-MRI-MS.git
+git clone https://github.com/aminz1995/cycleGAN-synthetic-T1-MRI-MS.git
 cd cycleGAN-synthetic-T1-MRI-MS
 pip install -r requirements.txt
 ```
