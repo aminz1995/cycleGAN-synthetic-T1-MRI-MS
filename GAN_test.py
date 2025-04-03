@@ -7,7 +7,9 @@ from skimage.metrics import peak_signal_noise_ratio as psnr
 from skimage.metrics import structural_similarity as ssim
 from PIL import Image
 import os
+from scipy.stats import ttest_rel
 import numpy as np
+from scipy import stats
 from tqdm import tqdm
 
 # Create results directory if it doesn't exist
@@ -179,23 +181,40 @@ for i, (flair, t1) in enumerate(tqdm(test_loader)):
         save_image(fake_FLAIR_resized, f'results/images/test/Generated_FLAIR_{i+1}.png', normalize=True)
         save_image(fake_T1_resized, f'results/images/test/Generated_T1_{i+1}.png', normalize=True)
 
-# Compute mean PSNR and SSIM
-mean_psnr_T1 = np.mean([v[0] for v in psnr_values])
-mean_psnr_FLAIR = np.mean([v[1] for v in psnr_values])
-mean_ssim_T1 = np.mean([v[0] for v in ssim_values])
-mean_ssim_FLAIR = np.mean([v[1] for v in ssim_values])
 
-max_psnr_T1 = np.max([v[0] for v in psnr_values])
-max_psnr_FLAIR = np.max([v[1] for v in psnr_values])
-min_ssim_T1 = np.min([v[0] for v in ssim_values])
-min_ssim_FLAIR = np.min([v[1] for v in ssim_values])
+# Helper function to compute 95% CI bounds
+def compute_ci_bounds(data):
+    mean = np.mean(data)
+    sem = stats.sem(data)
+    ci_range = sem * stats.t.ppf((1 + 0.95) / 2, len(data) - 1)
+    lower = mean - ci_range
+    upper = mean + ci_range
+    return mean, lower, upper
 
-print(f"Mean PSNR for T1: {mean_psnr_T1:.2f}")
-print(f"Mean PSNR for FLAIR: {mean_psnr_FLAIR:.2f}")
-print(f"Mean SSIM for T1: {mean_ssim_T1:.2f}")
-print(f"Mean SSIM for FLAIR: {mean_ssim_FLAIR:.2f}")
+# Convert to numpy arrays
+psnr_array = np.array(psnr_values)
+ssim_array = np.array(ssim_values)
 
-print(f"Max PSNR for T1: {max_psnr_T1:.2f}")
-print(f"Max PSNR for FLAIR: {max_psnr_FLAIR:.2f}")
-print(f"Min SSIM for T1: {min_ssim_T1:.2f}")
-print(f"Min SSIM for FLAIR: {min_ssim_FLAIR:.2f}")
+# Compute metrics for PSNR
+mean_psnr_T1, lower_psnr_T1, upper_psnr_T1 = compute_ci_bounds(psnr_array[:, 0])
+min_psnr_T1 = np.min(psnr_array[:, 0])
+max_psnr_T1 = np.max(psnr_array[:, 0])
+
+mean_psnr_FLAIR, lower_psnr_FLAIR, upper_psnr_FLAIR = compute_ci_bounds(psnr_array[:, 1])
+min_psnr_FLAIR = np.min(psnr_array[:, 1])
+max_psnr_FLAIR = np.max(psnr_array[:, 1])
+
+# Compute metrics for SSIM
+mean_ssim_T1, lower_ssim_T1, upper_ssim_T1 = compute_ci_bounds(ssim_array[:, 0])
+min_ssim_T1 = np.min(ssim_array[:, 0])
+max_ssim_T1 = np.max(ssim_array[:, 0])
+
+mean_ssim_FLAIR, lower_ssim_FLAIR, upper_ssim_FLAIR = compute_ci_bounds(ssim_array[:, 1])
+min_ssim_FLAIR = np.min(ssim_array[:, 1])
+max_ssim_FLAIR = np.max(ssim_array[:, 1])
+
+# Print results
+print(f"PSNR (T1): {mean_psnr_T1:.2f} dB (95% CI: {lower_psnr_T1:.2f}-{upper_psnr_T1:.2f}), Min: {min_psnr_T1:.2f}, Max: {max_psnr_T1:.2f}")
+print(f"PSNR (FLAIR): {mean_psnr_FLAIR:.2f} dB (95% CI: {lower_psnr_FLAIR:.2f}-{upper_psnr_FLAIR:.2f}), Min: {min_psnr_FLAIR:.2f}, Max: {max_psnr_FLAIR:.2f}")
+print(f"SSIM (T1): {mean_ssim_T1:.4f} (95% CI: {lower_ssim_T1:.4f}-{upper_ssim_T1:.4f}), Min: {min_ssim_T1:.4f}, Max: {max_ssim_T1:.4f}")
+print(f"SSIM (FLAIR): {mean_ssim_FLAIR:.4f} (95% CI: {lower_ssim_FLAIR:.4f}-{upper_ssim_FLAIR:.4f}), Min: {min_ssim_FLAIR:.4f}, Max: {max_ssim_FLAIR:.4f}")
