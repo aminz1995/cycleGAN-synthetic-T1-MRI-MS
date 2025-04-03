@@ -20,7 +20,7 @@ Evaluation includes image similarity metrics.
 git clone https://github.com/yourusername/cycleGAN-synthetic-T1-MRI-MS.git
 cd cycleGAN-synthetic-T1-MRI-MS
 pip install -r requirements.txt
-
+```
 
 ## 📂 Dataset Structure
 
@@ -34,34 +34,25 @@ data/
 
 Images can be in .nii, .nii.gz, or .png formats.
 Preprocessing scripts available in data/.
-🚀 Training
 
-python src/train.py \
-  --dataroot data/train \
-  --output_dir models/ \
-  --epochs 200 \
-  --batch_size 4 \
-  --lr 0.0002 \
-  --image_size 256
 
-🧪 Testing
+## 🚀 Training
 
-python src/test.py \
-  --dataroot data/test/flair \
-  --model_path models/cyclegan_epoch_200.pth \
-  --output_dir results/test_outputs/
+python src/train.py --config configs/cyclegan_config.yaml
 
-📊 Evaluation Metrics
+## 🧪 Evaluation
+
+python src/test.py --weights path/to/model.pth --data path/to/testset
+
+
+## 📊 Evaluation Metrics
 
     SSIM (Structural Similarity Index)
 
     PSNR (Peak Signal-to-Noise Ratio)
 
-    MAE / MSE
 
-    Dice Score (if lesion segmentations available)
-
-📚 Citation
+## 📚 Citation
 
 @article{yourcitation2025,
   title={Cycle-GAN generated synthetic T1 MRI from Flair in multiple sclerosis: A Quantitative Evaluation},
@@ -70,9 +61,9 @@ python src/test.py \
   year={2025}
 }
 
-📧 Contact
+## 📧 Contact
 
-Questions? Reach out at your.email@domain.com
+Questions? Reach out at aminz1995@gmail.com
 
 
 ---
